@@ -22,7 +22,12 @@ jobs:
       - if: ${{ steps.cache-readme.outputs.cache-hit != 'true' }}
         name: List the status of readme file
         continue-on-error: true
-        run: echo 'Cachd miss! ${{ hashFiles('README.md') }}'
+        run: |
+          echo 'Cachd miss! ${{ hashFiles('README.md') }}'
+          mkdir -p data1
+          mkdir -p data2
+          ls -la > data1/files.txt
+          ls -la > data2/files.txt
       - if: ${{ steps.cache-readme.outputs.cache-hit == 'true' }}
         name: List the status of readme file
         continue-on-error: true
