@@ -15,15 +15,15 @@ jobs:
       - uses: actions/cache@v3
         id: cache-readme
         with:
-          key: ${{ hasFiles('READMD.md') }}
+          key: ${{ hashFiles('READMD.md') }}
           path: |
             data1/**
             data2/**
       - if: ${{ steps.cache-readme.outputs.cache-hit != 'true' }}
         name: List the status of readme file
         continue-on-error: true
-        run: echo 'Cachd miss! ${{ hasFiles('READMD.md') }}'
+        run: echo 'Cachd miss! ${{ hashFiles('READMD.md') }}'
       - if: ${{ steps.cache-readme.outputs.cache-hit == 'true' }}
         name: List the status of readme file
         continue-on-error: true
-        run: echo 'Cachd hit! ${{ hasFiles('READMD.md') }}'
+        run: echo 'Cachd hit! ${{ hashFiles('READMD.md') }}'
