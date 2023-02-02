@@ -42,4 +42,6 @@ jobs:
       - if: ${{ steps.cache-readme.outputs.cache-hit == 'true' }}
         name: List the status of readme file
         continue-on-error: true
-        run: echo 'Cachd hit! ${{ hashFiles('README.md') }}'
+        run: |
+          echo 'Cachd hit! ${{ hashFiles('README.md') }}'
+          ls -l
