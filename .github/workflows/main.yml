@@ -1,0 +1,11 @@
+name: main
+on:
+  - push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: pwd
+      - run: |
+        DISPLAY=:0.0
+        echo $DISPLAY
