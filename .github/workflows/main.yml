@@ -18,8 +18,11 @@ jobs:
           key: ${{ hashFiles('README.md',
                              'README2.md') }}
           path: |
+            !**
             data1/**
             data2/**
+            bb/ee/**
+            cc/**
       - if: ${{ steps.cache-readme.outputs.cache-hit != 'true' }}
         name: List the status of readme file
         continue-on-error: true
@@ -29,6 +32,13 @@ jobs:
           mkdir -p data2
           ls -la > data1/files.txt
           ls -la > data2/files.txt
+          mkdir -p bb/ee
+          ls -la > bb/ee/1.txt
+          mkdir -p cc
+          ls -la > cc/2.txt
+          mkdir -p dd
+          ls -la > dd/3.txt
+          ls -la > 4.txt
       - if: ${{ steps.cache-readme.outputs.cache-hit == 'true' }}
         name: List the status of readme file
         continue-on-error: true
