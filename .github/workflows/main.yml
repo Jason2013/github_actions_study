@@ -15,7 +15,7 @@ jobs:
       - uses: actions/cache@v3
         id: cache-readme
         with:
-          key: ${{ hashFiles('README.md') }}
+          key: ${{ hashFiles('README.md', 'README2.md') }}
           path: |
             data1/**
             data2/**
