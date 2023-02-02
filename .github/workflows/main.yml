@@ -6,6 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: pwd
-      - run: |
-        DISPLAY=:0.0
-        echo $DISPLAY
+#      - run: |
+#        DISPLAY=:0.0
+#        echo $DISPLAY
