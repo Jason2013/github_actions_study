@@ -9,3 +9,5 @@ jobs:
       - run: |
           DISPLAY=:0.0
           echo $DISPLAY
+      - name: Checkout Code
+        uses: actions/checkout@v3
