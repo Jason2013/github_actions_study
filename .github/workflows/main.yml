@@ -9,12 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: pwd
+
       - run: |
           DISPLAY=:0.0
           echo $DISPLAY
+
       - name: Checkout Code
         uses: actions/checkout@v3
+
       - run: ls -la
+
       - uses: actions/cache@v3
         id: cache-readme
         with:
@@ -26,6 +30,7 @@ jobs:
             data2/**
             bb/ee/**
             cc/**
+
       - if: ${{ steps.cache-readme.outputs.cache-hit != 'true' }}
         name: List the status of readme file
         continue-on-error: true
@@ -42,9 +47,19 @@ jobs:
           mkdir -p dd
           ls -la > dd/3.txt
           ls -la > 4.txt
+
       - if: ${{ steps.cache-readme.outputs.cache-hit == 'true' }}
         name: List the status of readme file
         continue-on-error: true
         run: |
           echo 'Cachd hit! ${{ hashFiles('README.md') }}'
           ls -l
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: |
+            !**
+            data1/**
+            data2/**
+            bb/ee/**
+            cc/**
