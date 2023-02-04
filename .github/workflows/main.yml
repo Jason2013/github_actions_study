@@ -1,6 +1,9 @@
 name: main
 on:
-  - push
+  push:
+    branches:
+      - experimental_cache_restore_time
+
 jobs:
   test:
     runs-on: ubuntu-latest
