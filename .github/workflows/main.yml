@@ -32,7 +32,7 @@ jobs:
             cc/**
 
       - if: ${{ steps.cache-readme.outputs.cache-hit != 'true' }}
-        name: List the status of readme file
+        name: Cache Miss Operations
         continue-on-error: true
         run: |
           echo 'Cachd miss! ${{ hashFiles('README.md') }}'
@@ -49,11 +49,14 @@ jobs:
           ls -la > 4.txt
 
       - if: ${{ steps.cache-readme.outputs.cache-hit == 'true' }}
-        name: List the status of readme file
+        name: Cache Hit Operations
         continue-on-error: true
         run: |
           echo 'Cachd hit! ${{ hashFiles('README.md') }}'
-          ls -l
+          ls -l data1
+          ls -l data2
+          ls -l bb/ee
+          ls -l cc
 
       - uses: actions/upload-artifact@v3
         with:
