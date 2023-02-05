@@ -2,67 +2,42 @@ name: main
 on:
   push:
     branches:
-      - experimental_cache_restore_time
+      - experimental_cache_mix_file
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: pwd
-
-      - run: |
-          DISPLAY=:0.0
-          echo $DISPLAY
-
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - run: ls -la
+      - uses: actions/cache@v3
+        name: Cache 1
+        id: cache1
+        with:
+          key: cache1-key
+          path: |
+            README3.md
+
+      - run: ls -l
+        name: After Cache 1
 
       - uses: actions/cache@v3
-        id: cache-readme
+        name: Cache 2
+        id: cache2
         with:
-          key: ${{ hashFiles('README.md',
-                             'README2.md') }}
-          path: |
-            !**
-            data1/**
-            data2/**
-            bb/ee/**
-            cc/**
+          key: cache2-key-${{ hashFiles('**/*.md') }}
+          path: a.cpp
 
-      - if: ${{ steps.cache-readme.outputs.cache-hit != 'true' }}
+      - run: ls -l
+        name: After Cache 2
+
+      - if: ${{ steps.cache1.outputs.cache-hit != 'true' }}
         name: Cache Miss Operations
         continue-on-error: true
         run: |
-          echo 'Cachd miss! ${{ hashFiles('README.md') }}'
-          mkdir -p data1
-          mkdir -p data2
-          ls -la > data1/files.txt
-          ls -la > data2/files.txt
-          mkdir -p bb/ee
-          ls -la > bb/ee/1.txt
-          mkdir -p cc
-          ls -la > cc/2.txt
-          mkdir -p dd
-          ls -la > dd/3.txt
-          ls -la > 4.txt
+          cat README.md > README3.md
+          cat README2.md >> README3.md
 
-      - if: ${{ steps.cache-readme.outputs.cache-hit == 'true' }}
-        name: Cache Hit Operations
-        continue-on-error: true
-        run: |
-          echo 'Cachd hit! ${{ hashFiles('README.md') }}'
-          ls -l data1
-          ls -l data2
-          ls -l bb/ee
-          ls -l cc
-
-      - uses: actions/upload-artifact@v3
-        with:
-          path: |
-            !**
-            data1/**
-            data2/**
-            bb/ee/**
-            cc/**
+      - run: ls -l
+        name: After Run
