@@ -12,6 +12,16 @@ jobs:
         uses: actions/checkout@v3
 
       - uses: actions/cache@v3
+        name: Cache 2
+        id: cache2
+        with:
+          key: cache2-key-${{ hashFiles('**/*.md') }}
+          path: a.cpp
+
+      - run: ls -l
+        name: After Cache 2
+
+      - uses: actions/cache@v3
         name: Cache 1
         id: cache1
         with:
@@ -21,16 +31,6 @@ jobs:
 
       - run: ls -l
         name: After Cache 1
-
-      - uses: actions/cache@v3
-        name: Cache 2
-        id: cache2
-        with:
-          key: cache2-key-${{ hashFiles('**/*.md') }}
-          path: a.cpp
-
-      - run: ls -l
-        name: After Cache 2
 
       - if: ${{ steps.cache1.outputs.cache-hit != 'true' }}
         name: Cache Miss Operations
